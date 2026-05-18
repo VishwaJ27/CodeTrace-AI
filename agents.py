@@ -1,10 +1,19 @@
 import os
+import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 
 load_dotenv()
 
-api_key = os.getenv("GEMINI_API_KEY")
+
+def get_api_key():
+    try:
+        return st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        return os.getenv("GEMINI_API_KEY")
+
+
+api_key = get_api_key()
 
 client = genai.Client(api_key=api_key)
 
